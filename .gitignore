@@ -1,0 +1,6 @@
+.vs
+bld
+packages
+*/obj
+Client/Client.csproj.user
+Server/Server.csproj.user

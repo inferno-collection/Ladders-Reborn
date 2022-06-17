@@ -1,0 +1,23 @@
+{
+	"ChatSuggestion": {
+		"EventName": "chat:addSuggestion",
+		"Command": "/ladder",
+		"Suggestion": "Collects or stores a ladder in the closest vehicle."
+	},
+	
+	"CustomNotifications": false,
+	"CustomNotificationEventName": "",
+	
+	"PreviewLadderMode": 1,
+	
+	"KickCheaters": false,
+	
+	"MaxDistanceToVehicle": 4.0,
+	
+	"EnableLadderVehicleWhitelist": false,
+	"LadderVehicleWhitelist": {
+		"firetruk": -1
+	},
+
+	"MaxTotalLadders": -1
+}
