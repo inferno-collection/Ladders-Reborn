@@ -43,7 +43,7 @@ namespace InfernoCollection.LaddersReborn.Models
 
     public enum PreviewLadderMode
     {
-        NoPreview,
+        ForcedNoPreview,
         OptionalPreview,
         ForcedPreview
     }
