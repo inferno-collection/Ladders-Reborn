@@ -84,25 +84,7 @@ namespace InfernoCollection.LaddersReborn.Server
 
         #region Command Handlers
         [Command("ladder")]
-        internal void OnLadder([FromSource] Player source)
-        {
-            StateBag stateBag = source.State;
-
-            if ((stateBag.Get("ICCarryingLadder") ?? -1) > 0)
-            {
-                OnStoreLadder(source);
-            }
-            else if ((stateBag.Get("ICCarryingLadder") ?? -1) < 0)
-            {
-                if (_config.MaxTotalLadders != -1 && _createdLadders.Count >= _config.MaxTotalLadders)
-                {
-                    SendNotification(source, "~r~Max ladder count reached!", true);
-                    return;
-                }
-
-                OnCollectLadder(source);
-            }
-        }
+        internal void OnLadder([FromSource] Player source) => Ladder(source);
         #endregion
 
         #region Event Handlers
@@ -139,92 +121,14 @@ namespace InfernoCollection.LaddersReborn.Server
             }
         }
 
+        [EventHandler("Inferno-Collection:Server:Ladders:ToggleLadder")]
+        internal void OnToggleLadder([FromSource] Player source) => Ladder(source);
+
         [EventHandler("Inferno-Collection:Server:Ladders:CollectLadder")]
-        internal async void OnCollectLadder([FromSource] Player source)
-        {
-            if ((source.State.Get("ICCarryingLadder") ?? -1) > 0)
-            {
-                SendNotification(source, "~r~You are already carrying a ladder");
-                return;
-            }
+        internal void OnCollectLadder([FromSource] Player source) => CollectLadder(source);
 
-            Ped ped = source.Character;
-
-            if (API.GetVehiclePedIsIn(ped.Handle, false) != 0)
-            {
-                SendNotification(source, "~r~You cannot collect a ladder from within a vehicle");
-                return;
-            }
-
-            Vehicle vehicle = GetNearByVehicle(source);
-
-            if (vehicle is null)
-            {
-                SendNotification(source, "~r~No suitable vehicle found!", true);
-                return;
-            }
-
-            int model;
-            dynamic stateValue = 0;
-            StateBag stateBag = null;
-
-            if (_config.EnableLadderVehicleWhitelist && _whitelistedModels[model = vehicle.Model] != -1)
-            {
-                stateBag = vehicle.State;
-
-                if ((stateValue = stateBag.Get("ICLaddersStored")) is null)
-                {
-                    stateValue = _whitelistedModels[model];
-                    stateBag.Set("ICLaddersStored", stateValue, true);
-                }
-
-                if (stateValue <= 0)
-                {
-                    SendNotification(source, "~r~Vehicle has no ladders left!", true);
-                    return;
-                }
-            }
-
-            try
-            {
-                int timeout = 5;
-                Vector3 position = ped.Position;
-                Entity entity = new Prop(API.CreateObjectNoOffset(LADDER_PROP, position.X, position.Y, position.Z - 50f, true, true, true));
-
-                while (!API.DoesEntityExist(entity.Handle) && timeout > 0)
-                {
-                    timeout--;
-
-                    await Delay(200);
-                }
-
-                if (timeout == 0)
-                {
-                    Debug.WriteLine($"Error spawning ladder prop for {source.Name}");
-                    return;
-                }
-
-                _createdLadders.Add(entity.Handle);
-
-                entity.State.Set("ICLadderStatus", (int)Status.BeingCarried, true);
-
-                source.State.Set("ICCarryingLadder", entity.NetworkId, true);
-                source.TriggerEvent("Inferno-Collection:Client:Ladders:Collect", entity.NetworkId);
-
-                (entity.Owner ?? source).TriggerEvent("Inferno-Collection:Client:Ladders:Attach", int.Parse(source.Handle), entity.NetworkId);
-
-                if (_config.EnableLadderVehicleWhitelist && _whitelistedModels[model = vehicle.Model] != -1)
-                {
-                    stateBag.Set("ICLaddersStored", --stateValue, true);
-                }
-
-                SendNotification(source, "~g~Ladder collected");
-            }
-            catch
-            {
-                Debug.WriteLine($"Error creating ladder prop for {source.Name}");
-            }
-        }
+        [EventHandler("Inferno-Collection:Server:Ladders:StoreLadder")]
+        internal void OnStoreLadder([FromSource] Player source) => StoreLadder(source);
 
         [EventHandler("Inferno-Collection:Server:Ladders:PlaceLadder")]
         internal async void OnCreateLadder([FromSource] Player source, bool dropped)
@@ -279,80 +183,6 @@ namespace InfernoCollection.LaddersReborn.Server
             catch
             {
                 Debug.WriteLine($"Error placing ladder for {source.Name}");
-            }
-        }
-
-        [EventHandler("Inferno-Collection:Server:Ladders:StoreLadder")]
-        internal void OnStoreLadder([FromSource] Player source)
-        {
-            try
-            {
-                int networkId = source.State.Get("ICCarryingLadder") ?? -1;
-
-                if (networkId < 0)
-                {
-                    SendNotification(source, "~r~You are not carrying a ladder");
-                    return;
-                }
-
-                Vehicle vehicle = GetNearByVehicle(source);
-
-                if (vehicle is null)
-                {
-                    SendNotification(source, "~r~No suitable vehicle found!", true);
-                    return;
-                }
-
-                int model;
-                dynamic stateValue = 0;
-                StateBag stateBag = null;
-
-                if (_config.EnableLadderVehicleWhitelist && _whitelistedModels[model = vehicle.Model] != -1)
-                {
-                    stateBag = vehicle.State;
-
-                    if ((stateValue = stateBag.Get("ICLaddersStored")) is null)
-                    {
-                        stateValue = _whitelistedModels[model];
-                        stateBag.Set("ICLaddersStored", stateValue, true);
-                    }
-
-                    if (stateValue >= _whitelistedModels[model])
-                    {
-                        SendNotification(source, "~r~Vehicle cannot carry more ladders", true);
-                        return;
-                    }
-                }
-
-                Entity entity = Entity.FromNetworkId(networkId);
-
-                if (!API.DoesEntityExist(entity.Handle) || (Status)(entity.State.Get("ICLadderStatus") ?? -1) != Status.BeingCarried)
-                {
-                    return;
-                }
-
-                if (!_createdLadders.Contains(entity.Handle))
-                {
-                    HandleCheater(source, $"!!! {source.Name} (#{source.Handle}) has been caught trying to use \"Inferno-Collection:Server:Ladders:StoreLadder\" to delete an unrelated entity.");
-                    return;
-                }
-
-                source.State.Set("ICCarryingLadder", -1, true);
-
-                _createdLadders.Remove(entity.Handle);
-
-                API.DeleteEntity(entity.Handle);
-
-                SendNotification(source, "~g~Ladder stored");
-
-                if (_config.EnableLadderVehicleWhitelist && _whitelistedModels[model = vehicle.Model] != -1)
-                {
-                    stateBag.Set("ICLaddersStored", ++stateValue, true);
-                }
-            }
-            catch
-            {
-                Debug.WriteLine($"Error storing ladder for {source.Name}");
             }
         }
 
@@ -511,6 +341,191 @@ namespace InfernoCollection.LaddersReborn.Server
 
         #region Functions
         internal void SendNotification(Player player, string message, bool blink = false) => player.TriggerEvent("Inferno-Collection:Client:Ladders:Notification", message, blink);
+
+        internal void Ladder(Player player)
+        {
+            StateBag stateBag = player.State;
+
+            if ((stateBag.Get("ICCarryingLadder") ?? -1) > 0)
+            {
+                StoreLadder(player);
+            }
+            else if ((stateBag.Get("ICCarryingLadder") ?? -1) < 0)
+            {
+                if (_config.MaxTotalLadders != -1 && _createdLadders.Count >= _config.MaxTotalLadders)
+                {
+                    SendNotification(player, "~r~Max ladder count reached!", true);
+                    return;
+                }
+
+                CollectLadder(player);
+            }
+        }
+
+        internal async void CollectLadder(Player player)
+        {
+            if ((player.State.Get("ICCarryingLadder") ?? -1) > 0)
+            {
+                SendNotification(player, "~r~You are already carrying a ladder");
+                return;
+            }
+
+            Ped ped = player.Character;
+
+            if (API.GetVehiclePedIsIn(ped.Handle, false) != 0)
+            {
+                SendNotification(player, "~r~You cannot collect a ladder from within a vehicle");
+                return;
+            }
+
+            Vehicle vehicle = GetNearByVehicle(player);
+
+            if (vehicle is null)
+            {
+                SendNotification(player, "~r~No suitable vehicle found!", true);
+                return;
+            }
+
+            if (_config.MaxTotalLadders != -1 && _createdLadders.Count >= _config.MaxTotalLadders)
+            {
+                SendNotification(player, "~r~Max ladder count reached!", true);
+                return;
+            }
+
+            int model;
+            dynamic stateValue = 0;
+            StateBag stateBag = null;
+
+            if (_config.EnableLadderVehicleWhitelist && _whitelistedModels[model = vehicle.Model] != -1)
+            {
+                stateBag = vehicle.State;
+
+                if ((stateValue = stateBag.Get("ICLaddersStored")) is null)
+                {
+                    stateValue = _whitelistedModels[model];
+                    stateBag.Set("ICLaddersStored", stateValue, true);
+                }
+
+                if (stateValue <= 0)
+                {
+                    SendNotification(player, "~r~Vehicle has no ladders left!", true);
+                    return;
+                }
+            }
+
+            try
+            {
+                int timeout = 5;
+                Vector3 position = ped.Position;
+                Entity entity = new Prop(API.CreateObjectNoOffset(LADDER_PROP, position.X, position.Y, position.Z - 50f, true, true, true));
+
+                while (!API.DoesEntityExist(entity.Handle) && timeout > 0)
+                {
+                    timeout--;
+
+                    await Delay(200);
+                }
+
+                if (timeout == 0)
+                {
+                    Debug.WriteLine($"Error spawning ladder prop for {player.Name}");
+                    return;
+                }
+
+                _createdLadders.Add(entity.Handle);
+
+                entity.State.Set("ICLadderStatus", (int)Status.BeingCarried, true);
+
+                player.State.Set("ICCarryingLadder", entity.NetworkId, true);
+                player.TriggerEvent("Inferno-Collection:Client:Ladders:Collect", entity.NetworkId);
+
+                (entity.Owner ?? player).TriggerEvent("Inferno-Collection:Client:Ladders:Attach", int.Parse(player.Handle), entity.NetworkId);
+
+                if (_config.EnableLadderVehicleWhitelist && _whitelistedModels[model = vehicle.Model] != -1)
+                {
+                    stateBag.Set("ICLaddersStored", --stateValue, true);
+                }
+
+                SendNotification(player, "~g~Ladder collected");
+            }
+            catch
+            {
+                Debug.WriteLine($"Error creating ladder prop for {player.Name}");
+            }
+        }
+
+        internal void StoreLadder(Player source)
+        {
+            try
+            {
+                int networkId = source.State.Get("ICCarryingLadder") ?? -1;
+
+                if (networkId < 0)
+                {
+                    SendNotification(source, "~r~You are not carrying a ladder");
+                    return;
+                }
+
+                Vehicle vehicle = GetNearByVehicle(source);
+
+                if (vehicle is null)
+                {
+                    SendNotification(source, "~r~No suitable vehicle found!", true);
+                    return;
+                }
+
+                int model;
+                dynamic stateValue = 0;
+                StateBag stateBag = null;
+
+                if (_config.EnableLadderVehicleWhitelist && _whitelistedModels[model = vehicle.Model] != -1)
+                {
+                    stateBag = vehicle.State;
+
+                    if ((stateValue = stateBag.Get("ICLaddersStored")) is null)
+                    {
+                        stateValue = _whitelistedModels[model];
+                        stateBag.Set("ICLaddersStored", stateValue, true);
+                    }
+
+                    if (stateValue >= _whitelistedModels[model])
+                    {
+                        SendNotification(source, "~r~Vehicle cannot carry more ladders", true);
+                        return;
+                    }
+                }
+
+                Entity entity = Entity.FromNetworkId(networkId);
+
+                if (!API.DoesEntityExist(entity.Handle) || (Status)(entity.State.Get("ICLadderStatus") ?? -1) != Status.BeingCarried)
+                {
+                    return;
+                }
+
+                if (!_createdLadders.Contains(entity.Handle))
+                {
+                    HandleCheater(source, $"!!! {source.Name} (#{source.Handle}) has been caught trying to use \"Inferno-Collection:Server:Ladders:StoreLadder\" to delete an unrelated entity.");
+                    return;
+                }
+
+                source.State.Set("ICCarryingLadder", -1, true);
+
+                _createdLadders.Remove(entity.Handle);
+
+                API.DeleteEntity(entity.Handle);
+
+                SendNotification(source, "~g~Ladder stored");
+
+                if (_config.EnableLadderVehicleWhitelist && _whitelistedModels[model = vehicle.Model] != -1)
+                {
+                    stateBag.Set("ICLaddersStored", ++stateValue, true);
+                }
+            }
+            catch
+            {
+                Debug.WriteLine($"Error storing ladder for {source.Name}");
+            }
+        }
 
         internal Vehicle GetNearByVehicle(Player player)
         {
