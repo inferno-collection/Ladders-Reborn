@@ -1,5 +1,5 @@
 ﻿/*
- * Inferno Collection Ladders Reborn 1.0 Alpha
+ * Inferno Collection Ladders Reborn 1.1 Alpha
  * 
  * Copyright (c) 2019-2022, Christopher M, Inferno Collection. All rights reserved.
  * 
