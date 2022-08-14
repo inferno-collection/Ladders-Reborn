@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Inferno Collection Ladders Reborn 1.0 Alpha
  * 
  * Copyright (c) 2019-2022, Christopher M, Inferno Collection. All rights reserved.
@@ -363,7 +363,10 @@ namespace InfernoCollection.LaddersReborn.Client
             _nearClimbableLadder = false;
 
             Vector3 pedPosition = Game.PlayerPed.Position;
-            Entity entity = World.GetAllProps().Where(i => i.Model == LADDER_MODEL).FirstOrDefault(i => i != _carryingLadder);
+            Entity entity = World.GetAllProps()
+                .Where(i => i.Model == LADDER_MODEL)
+                .OrderBy(i => World.GetDistance(i.Position, pedPosition))
+                .FirstOrDefault(i => i != _carryingLadder);
 
             if (!Entity.Exists(entity))
             {
@@ -371,7 +374,7 @@ namespace InfernoCollection.LaddersReborn.Client
                 return;
             }
 
-            float distanceToLadder = World.GetDistance(pedPosition, entity.GetOffsetPosition(new(0f, 0f, 1.2f)));
+            float distanceToLadder = World.GetDistance(pedPosition, entity.Position);
 
             if (distanceToLadder > 10f)
             {
@@ -387,7 +390,7 @@ namespace InfernoCollection.LaddersReborn.Client
             switch ((Status)(entity.State.Get("ICLadderStatus") ?? -1))
             {
                 case Status.Placed:
-                    if (distanceToLadder > 3.5f)
+                    if (World.GetDistance(pedPosition, entity.GetOffsetPosition(new(0f, 0f, 1.2f))) > 3.5f)
                     {
                         return;
                     }
