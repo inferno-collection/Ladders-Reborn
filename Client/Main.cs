@@ -497,13 +497,19 @@ namespace InfernoCollection.LaddersReborn.Client
 
             if (_config.PreviewLadderMode == PreviewLadderMode.ForcedPreview || (_config.PreviewLadderMode == PreviewLadderMode.OptionalPreview && _enablePreviewLadder))
             {
-                Vector3 previewCoords = ped.GetOffsetPosition(new(0.0f, 1.2f, 1.32f));
-                _previewLadder = new Prop(API.CreateObjectNoOffset((uint)LADDER_MODEL.Hash, previewCoords.X, previewCoords.Y, previewCoords.Z, false, false, false))
+                Vector3 pedPosition = ped.Position;
+                RaycastResult raycast = World.RaycastCapsule(pedPosition, pedPosition, 2f, (IntersectOptions)10, ped);
+
+                if (!raycast.DitHitEntity)
                 {
-                    Rotation = ped.Rotation + new Vector3(-20f, 0f, 0f),
-                    IsCollisionEnabled = false,
-                    Opacity = 100
-                };
+                    Vector3 previewCoords = ped.GetOffsetPosition(new(0.0f, 1.2f, 1.32f));
+                    _previewLadder = new Prop(API.CreateObjectNoOffset((uint)LADDER_MODEL.Hash, previewCoords.X, previewCoords.Y, previewCoords.Z, false, false, false))
+                    {
+                        Rotation = ped.Rotation + new Vector3(-20f, 0f, 0f),
+                        IsCollisionEnabled = false,
+                        Opacity = 100
+                    };
+                }
             }
 
             string helpText = "~INPUT_PICKUP~ Place ladder\n~INPUT_ENTER~ Drop ladder";
