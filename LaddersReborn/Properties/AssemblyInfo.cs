@@ -6,5 +6,5 @@ using System.Runtime.InteropServices;
 [assembly: Guid("E1D692C6-5297-47EA-8A69-EA7E14831F80")]
 [assembly: AssemblyCompany("Inferno Collection")]
 [assembly: NeutralResourcesLanguage("en-US")]
-[assembly: AssemblyVersion("1.1.0.0")]
+[assembly: AssemblyVersion("1.1.1.0")]
 [assembly: ComVisible(false)]

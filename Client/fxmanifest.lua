@@ -1,4 +1,4 @@
--- Inferno Collection Ladders Reborn 1.1 Alpha
+-- Inferno Collection Ladders Reborn 1.11 Beta
 --
 -- Copyright (c) 2019-2022, Christopher M, Inferno Collection. All rights reserved.
 --
@@ -15,7 +15,7 @@ description "OneSync Ladder script for FiveM."
 
 author "Inferno Collection (inferno-collection.com)"
 
-version "1.1 Alpha"
+version "1.11 Beta"
 
 url "https://inferno-collection.com"
 
