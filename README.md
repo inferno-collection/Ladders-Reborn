@@ -27,6 +27,14 @@ Presently, the following can be customized:
 Usage:
 - Go up to a vehicle and type `/ladder` to collect/store
 
+### Development Showcase Video (Showing Public Beta Version 1.11)
+[![Watch the Development Showcase video](https://i.imgur.com/4eV3ykQ.jpg)](https://www.youtube.com/watch?v=GDHWDixfoAQ)
+
+### Pictures
+![Image 1](https://i.imgur.com/VKh6P2E.jpg)
+![Image 2](https://i.imgur.com/AWkgLIw.jpg)
+![Image 3](https://i.imgur.com/yUNKsJI.jpg)
+
 ### Download link
 https://github.com/inferno-collection/Ladders-Reborn/releases/latest
 
