@@ -280,6 +280,7 @@ namespace InfernoCollection.LaddersReborn.Client
             ped.IsPositionFrozen = true;
 
             _climbingLadder = ladder;
+            _pauseClimbing = false;
 
             Tick += ClimbingTick;
 
@@ -564,6 +565,7 @@ namespace InfernoCollection.LaddersReborn.Client
             {
                 TriggerServerEvent("Inferno-Collection:Server:Ladders:FinishedClimbing", _climbingLadder.NetworkId);
 
+                _pauseClimbing = false;
                 _climbingLadder = null;
 
                 Tick -= ClimbingTick;
