@@ -121,7 +121,7 @@ namespace InfernoCollection.LaddersReborn.Client
 
             try
             {
-                configFile = API.LoadResourceFile("inferno-ladders-reborn", Globals.CONFIG_FILE_NAME);
+                configFile = API.LoadResourceFile(API.GetCurrentResourceName(), Globals.CONFIG_FILE_NAME);
             }
             catch (Exception exception)
             {
