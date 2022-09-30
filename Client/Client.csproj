@@ -68,11 +68,6 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\LaddersReborn\LaddersReborn.csproj">
-      <Project>{c49297bb-f88e-4403-8eb4-21386f6f9e12}</Project>
-      <Name>LaddersReborn</Name>
-    </ProjectReference>
-  </ItemGroup>
+  <Import Project="..\LaddersReborn.Shared\LaddersReborn.Shared.projitems" Label="Shared" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

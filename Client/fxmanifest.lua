@@ -20,12 +20,10 @@ version "1.11 Beta"
 url "https://inferno-collection.com"
 
 client_script {
-    "LaddersReborn.net.dll",
     "LaddersReborn.Client.net.dll"
 }
 
 server_script {
-    "LaddersReborn.net.dll",
     "LaddersReborn.Server.net.dll"
 }
 

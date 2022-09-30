@@ -56,11 +56,6 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\LaddersReborn\LaddersReborn.csproj">
-      <Project>{C49297BB-F88E-4403-8EB4-21386F6F9E12}</Project>
-      <Name>LaddersReborn</Name>
-    </ProjectReference>
-  </ItemGroup>
+  <Import Project="..\LaddersReborn.Shared\LaddersReborn.Shared.projitems" Label="Shared" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

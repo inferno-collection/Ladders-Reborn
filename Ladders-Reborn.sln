@@ -5,9 +5,9 @@ VisualStudioVersion = 17.2.32526.322
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Client", "Client\Client.csproj", "{CC2F06BF-CE94-45F2-960D-3AC8B87FDC0A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LaddersReborn", "LaddersReborn\LaddersReborn.csproj", "{C49297BB-F88E-4403-8EB4-21386F6F9E12}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Server", "Server\Server.csproj", "{011683FF-D484-4AB4-AB8A-5A5ABF0361E8}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "LaddersReborn", "LaddersReborn.Shared\LaddersReborn.shproj", "{4ECE30F8-B161-40F8-949F-A71896F28486}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -19,10 +19,6 @@ Global
 		{CC2F06BF-CE94-45F2-960D-3AC8B87FDC0A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CC2F06BF-CE94-45F2-960D-3AC8B87FDC0A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CC2F06BF-CE94-45F2-960D-3AC8B87FDC0A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C49297BB-F88E-4403-8EB4-21386F6F9E12}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C49297BB-F88E-4403-8EB4-21386F6F9E12}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C49297BB-F88E-4403-8EB4-21386F6F9E12}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C49297BB-F88E-4403-8EB4-21386F6F9E12}.Release|Any CPU.Build.0 = Release|Any CPU
 		{011683FF-D484-4AB4-AB8A-5A5ABF0361E8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{011683FF-D484-4AB4-AB8A-5A5ABF0361E8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{011683FF-D484-4AB4-AB8A-5A5ABF0361E8}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -33,5 +29,10 @@ Global
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {8A45D8EB-AE23-4B25-8A0C-2A8F5CD179AB}
+	EndGlobalSection
+	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		LaddersReborn.Shared\LaddersReborn.Shared.projitems*{011683ff-d484-4ab4-ab8a-5a5abf0361e8}*SharedItemsImports = 4
+		LaddersReborn.Shared\LaddersReborn.Shared.projitems*{4ece30f8-b161-40f8-949f-a71896f28486}*SharedItemsImports = 13
+		LaddersReborn.Shared\LaddersReborn.Shared.projitems*{cc2f06bf-ce94-45f2-960d-3ac8b87fdc0a}*SharedItemsImports = 4
 	EndGlobalSection
 EndGlobal
