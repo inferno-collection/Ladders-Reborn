@@ -7,7 +7,7 @@
     <ProjectGuid>{011683FF-D484-4AB4-AB8A-5A5ABF0361E8}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>InfernoCollection.LaddersReborn.Client</RootNamespace>
+    <RootNamespace>InfernoCollection.LaddersReborn.Server</RootNamespace>
     <AssemblyName>LaddersReborn.Server.net</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
