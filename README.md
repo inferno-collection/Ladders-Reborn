@@ -2,7 +2,7 @@
 # Inferno Collection: Ladders - Reborn
 [![Build and Check](https://github.com/inferno-collection/Ladders-Reborn/actions/workflows/dotnet.yml/badge.svg?branch=development)](https://github.com/inferno-collection/Ladders-Reborn/actions/workflows/dotnet.yml)
 
-__Public Alpha Version 1.12__
+__Public Alpha Version 1.13__
 
 Following the release of the [original Ladders](https://github.com/inferno-collection/Ladders) back in 2019, Ladders - Reborn is the updated C# version boasting OneSync support, addon Ladder prop instead of replace, and more efficient code.
 
