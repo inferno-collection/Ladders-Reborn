@@ -19,15 +19,9 @@ version "1.13 Alpha"
 
 url "https://inferno-collection.com"
 
-client_script {
-    "LaddersReborn.net.dll",
-    "LaddersReborn.Client.net.dll"
-}
+client_script "LaddersReborn.Client.net.dll"
 
-server_script {
-    "LaddersReborn.net.dll",
-    "LaddersReborn.Server.net.dll"
-}
+server_script "LaddersReborn.Server.net.dll"
 
 files {
     "config.json",
