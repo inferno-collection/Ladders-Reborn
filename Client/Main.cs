@@ -23,7 +23,7 @@ using System.Threading.Tasks;
 
 namespace InfernoCollection.LaddersReborn.Client
 {
-    public class Main : ClientScript
+    public class Main : BaseScript
     {
         #region Configuration Variables
         internal readonly Model LADDER_MODEL = new(Globals.LADDER_PROP_NAME);

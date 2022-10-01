@@ -22,7 +22,7 @@ using System.Threading.Tasks;
 
 namespace InfernoCollection.LaddersReborn.Server
 {
-    public class Main : ServerScript
+    public class Main : BaseScript
     {
         #region Configuration Variables
         internal readonly uint LADDER_PROP = (uint)API.GetHashKey(Globals.LADDER_PROP_NAME);
