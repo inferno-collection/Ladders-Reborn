@@ -1,5 +1,5 @@
 ﻿/*
- * Inferno Collection Ladders Reborn 1.11 Beta
+ * Inferno Collection Ladders Reborn 1.13 Beta
  * 
  * Copyright (c) 2019-2022, Christopher M, Inferno Collection. All rights reserved.
  * 
@@ -22,7 +22,7 @@ using System.Threading.Tasks;
 
 namespace InfernoCollection.LaddersReborn.Server
 {
-    public class Main : ServerScript
+    public class Main : BaseScript
     {
         #region Configuration Variables
         internal readonly uint LADDER_PROP = (uint)API.GetHashKey(Globals.LADDER_PROP_NAME);

@@ -1,5 +1,5 @@
 /*
- * Inferno Collection Ladders Reborn 1.11 Beta
+ * Inferno Collection Ladders Reborn 1.13 Beta
  * 
  * Copyright (c) 2019-2022, Christopher M, Inferno Collection. All rights reserved.
  * 
@@ -23,7 +23,7 @@ using System.Threading.Tasks;
 
 namespace InfernoCollection.LaddersReborn.Client
 {
-    public class Main : ClientScript
+    public class Main : BaseScript
     {
         #region Configuration Variables
         internal readonly Model LADDER_MODEL = new(Globals.LADDER_PROP_NAME);
@@ -280,6 +280,7 @@ namespace InfernoCollection.LaddersReborn.Client
             ped.IsPositionFrozen = true;
 
             _climbingLadder = ladder;
+            _pauseClimbing = false;
 
             Tick += ClimbingTick;
 
@@ -564,6 +565,7 @@ namespace InfernoCollection.LaddersReborn.Client
             {
                 TriggerServerEvent("Inferno-Collection:Server:Ladders:FinishedClimbing", _climbingLadder.NetworkId);
 
+                _pauseClimbing = false;
                 _climbingLadder = null;
 
                 Tick -= ClimbingTick;

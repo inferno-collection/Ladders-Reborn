@@ -7,7 +7,7 @@
     <ProjectGuid>{011683FF-D484-4AB4-AB8A-5A5ABF0361E8}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>InfernoCollection.LaddersReborn.Client</RootNamespace>
+    <RootNamespace>InfernoCollection.LaddersReborn.Server</RootNamespace>
     <AssemblyName>LaddersReborn.Server.net</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -56,11 +56,6 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\LaddersReborn\LaddersReborn.csproj">
-      <Project>{C49297BB-F88E-4403-8EB4-21386F6F9E12}</Project>
-      <Name>LaddersReborn</Name>
-    </ProjectReference>
-  </ItemGroup>
+  <Import Project="..\LaddersReborn.Shared\LaddersReborn.Shared.projitems" Label="Shared" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
