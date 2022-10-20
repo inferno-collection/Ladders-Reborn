@@ -1,5 +1,5 @@
 /*
- * Inferno Collection Ladders Reborn 1.13 Alpha
+ * Inferno Collection Ladders Reborn 1.13 Beta
  * 
  * Copyright (c) 2019-2022, Christopher M, Inferno Collection. All rights reserved.
  * 
