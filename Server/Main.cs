@@ -509,6 +509,7 @@ namespace InfernoCollection.LaddersReborn.Server
                 }
 
                 source.State.Set("ICCarryingLadder", -1, true);
+                source.TriggerEvent("Inferno-Collection:Client:Ladders:Store");
 
                 _createdLadders.Remove(entity.Handle);
 

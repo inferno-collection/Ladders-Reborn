@@ -199,6 +199,9 @@ namespace InfernoCollection.LaddersReborn.Client
             Tick += CarryingTick;
         }
 
+        [EventHandler("Inferno-Collection:Client:Ladders:Store")]
+        internal void OnStore() => _carryingLadder = null;
+
         [EventHandler("Inferno-Collection:Client:Ladders:Attach")]
         internal async void OnAttach(int playerId, int networkId, bool onBack = false)
         {
