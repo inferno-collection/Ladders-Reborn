@@ -1,5 +1,5 @@
 ﻿/*
- * Inferno Collection Ladders Reborn 1.13 Beta
+ * Inferno Collection Ladders Reborn 1.14 Beta
  * 
  * Copyright (c) 2019-2022, Christopher M, Inferno Collection. All rights reserved.
  * 
@@ -509,6 +509,7 @@ namespace InfernoCollection.LaddersReborn.Server
                 }
 
                 source.State.Set("ICCarryingLadder", -1, true);
+                source.TriggerEvent("Inferno-Collection:Client:Ladders:Store");
 
                 _createdLadders.Remove(entity.Handle);
 

@@ -1,5 +1,5 @@
 /*
- * Inferno Collection Ladders Reborn 1.13 Beta
+ * Inferno Collection Ladders Reborn 1.14 Beta
  * 
  * Copyright (c) 2019-2022, Christopher M, Inferno Collection. All rights reserved.
  * 
@@ -198,6 +198,9 @@ namespace InfernoCollection.LaddersReborn.Client
 
             Tick += CarryingTick;
         }
+
+        [EventHandler("Inferno-Collection:Client:Ladders:Store")]
+        internal void OnStore() => _carryingLadder = null;
 
         [EventHandler("Inferno-Collection:Client:Ladders:Attach")]
         internal async void OnAttach(int playerId, int networkId, bool onBack = false)
