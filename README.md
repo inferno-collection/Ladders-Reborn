@@ -1,12 +1,13 @@
 ![top_image|2120x352](https://i.imgur.com/eydEeF0.jpg) 
 # Inferno Collection: Ladders - Reborn
-[![Build and Check](https://github.com/inferno-collection/Ladders-Reborn/actions/workflows/dotnet.yml/badge.svg?branch=master)](https://github.com/inferno-collection/Ladders-Reborn/actions/workflows/dotnet.yml)
 
 __Public Beta Version 1.14__
 
 Following the release of the [original Ladders](https://github.com/inferno-collection/Ladders) back in 2019, Ladders - Reborn is the updated C# version boasting OneSync support, addon Ladder prop instead of replace, and more efficient code.
 
 "Adds working ladders to FiveM, ideal for Fire Department use. Ladders are stored in a configurable list of vehicles, with each vehicle being able to carry a configurable maximum amount of ladders. The resource includes a custom ladder model as well."
+
+<a href="https://www.buymeacoffee.com/inferno_collection" target="_blank"><img width="245" height="45" alt="fire_truk" src="https://inferno-collection.com/img/fire_truk.png" /></a>
 
 Features:
 - Place climbable ladders anywhere
