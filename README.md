@@ -1,3 +1,7 @@
+> Unsupported as of 10/24/2026 - Downloads still available, but no support will be provided for any issues found.
+
+***
+
 ![top_image|2120x352](https://i.imgur.com/eydEeF0.jpg) 
 # Inferno Collection: Ladders - Reborn
 
